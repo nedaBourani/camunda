@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_09o2k3v" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <bpmn:process id="test-process" name="test-process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0k8lljr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_0jhqg7l">
+      <bpmn:incoming>Flow_0h0mz4y</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="serviceTaskBookHotel" name="serviceTaskBookHotel">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="bookHotel-service" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0k8lljr</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h0mz4y</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:boundaryEvent id="Event_0gpyx97" attachedToRef="serviceTaskBookHotel">
+      <bpmn:compensateEventDefinition id="CompensateEventDefinition_1llzbuk" />
+    </bpmn:boundaryEvent>
+    <bpmn:serviceTask id="CompensateHotelBookingService" name="CompensateHotelBookingService" isForCompensation="true">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="compensateHotelBooking-service" />
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0h0mz4y" sourceRef="serviceTaskBookHotel" targetRef="Event_0jhqg7l" />
+    <bpmn:sequenceFlow id="Flow_0k8lljr" sourceRef="StartEvent_1" targetRef="serviceTaskBookHotel" />
+    <bpmn:association id="Association_0o737w4" associationDirection="One" sourceRef="Event_0gpyx97" targetRef="CompensateHotelBookingService" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test-process">
+      <bpmndi:BPMNShape id="Activity_08mh3br_di" bpmnElement="serviceTaskBookHotel">
+        <dc:Bounds x="350" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1auiwlm_di" bpmnElement="CompensateHotelBookingService">
+        <dc:Bounds x="550" y="280" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0jhqg7l_di" bpmnElement="Event_0jhqg7l">
+        <dc:Bounds x="542" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0o737w4_di" bpmnElement="Association_0o737w4">
+        <di:waypoint x="390" y="178" />
+        <di:waypoint x="390" y="320" />
+        <di:waypoint x="550" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0gpyx97_di" bpmnElement="Event_0gpyx97">
+        <dc:Bounds x="372" y="142" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0k8lljr_di" bpmnElement="Flow_0k8lljr">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="350" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h0mz4y_di" bpmnElement="Flow_0h0mz4y">
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="542" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
